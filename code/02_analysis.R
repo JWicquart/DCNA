@@ -22,6 +22,8 @@ data_transect <- data %>%
 ggplot(data = data_transect, aes(x = parentEventID, y = cover, fill = category)) +
   geom_bar(stat = "identity", position = "stack")
 
+ggsave("figs/hangover-transect-benthic-community.png")
+
 # 4. Plot data per site ----
 
 # 4.1 Calculate cover per site --
@@ -36,6 +38,8 @@ data_site <- data %>%
 
 ggplot(data = data_site, aes(x = locality, y = cover, fill = category)) +
   geom_bar(stat = "identity", position = "stack")
+
+ggsave("figs/hangover-site-benthic-community.png")
 
 # 5. Coral species per transect ----
 
@@ -52,3 +56,5 @@ data_transect <- data %>%
 
 ggplot(data = data_transect, aes(x = parentEventID, y = cover, fill = subcategory)) +
   geom_bar(stat = "identity", position = "stack")
+
+ggsave("figs/hangover-transect-coral-community.png")

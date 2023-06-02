@@ -3,12 +3,37 @@
 
 ## 1. Introduction
 
+The goals of this repository are to standardize benthic cover and fish data gathered by Dutch Caribbean monitoring programs (see below) and to provide R scripts to analyze these standardized data. This repository aims to facilitate the reporting process for the Dutch Caribbean.
+
 * Aruba National Parks Foundation (FPNA)
 * Stichting Nationale Parken Bonaire (STINAPA)
 * Caribbean Research and Management of Biodiversity (CARMABI)
 * Saba Conservation Foundation (SCF)
 * Nature Foundation St. Maarten (NFSXM)
 * St. Eustatius National Parks (STENAPA)
+
+
+## 2. Code
+
+This repository contains three folders: `data`, `code`, and `figs`. The `data` folder contains the data, the `code` folder contains the code necessary to standardize and analyse the data, and the `figs` folder contains the figures produced through the analysis codes. 
+
+
+**Table 1.** Description of variables included in standardized benthic cover dataset. The icons for the variables categories (`Cat.`) represents :memo: = description variables, :globe_with_meridians: = spatial variables, :calendar: = temporal variables, :straight_ruler: = methodological variables, :crab: = taxonomic variables, :chart_with_upwards_trend: = metric variables. Variables names (except *category*, *subcategory*, and *n*) correspond to [DarwinCore terms](https://dwc.tdwg.org/terms).
+
+|  #  | Variable              | Cat.                       | Type      | Description                                 |
+|----:|:----------------------|:--------------------------:|:----------|:--------------------------------------------|
+| 1   | datasetID             | :memo:                     | Factor    | ID of the dataset                           |  
+| 2   | locality              | :globe_with_meridians:     | Character | Site name                                   |  
+| 3   | parentEventID         | :globe_with_meridians:     | Integer   | Transect ID                                 |  
+| 4   | eventID               | :globe_with_meridians:     | Integer   | Quadrat ID                                  |  
+| 5   | decimalLatitude       | :globe_with_meridians:     | Numeric   | Latitude (*decimal, EPSG:4326*)             |  
+| 6   | decimalLongitude      | :globe_with_meridians:     | Numeric   | Longitude (*decimal, EPSG:4326*)            |  
+| 7   | verbatimDepth         | :globe_with_meridians:     | Numeric   | Depth (*m*)                                 |  
+| 8   | year                  | :calendar:                 | Integer   | Four-digit year                             |  
+| 9   | category              | :crab:                     | Factor    | Benthic category                            |  
+| 10  | subcategory           | :crab:                     | Factor    | Benthic subcategory                         |   
+| 11  | n                     | :chart_with_upwards_trend: | Integer   | Number                                      |
+
 
 ## 3. Reproducibility parameters
 
