@@ -7,54 +7,69 @@ library(readxl)
 
 data <- read.csv("data/clean_data.csv")
 
-# 3. Plot data per transect ----
+# 3. Trends of benthic categories for all sites ----
 
-# 3.1 Calculate cover per transect --
+# 3.1 Aggregate the data --
 
-data_transect <- data %>% 
-  group_by(locality, parentEventID, category) %>% 
+data_aggregated <- data %>% 
+  group_by(locality, parentEventID, year, category) %>% 
   summarise(n = sum(n)) %>%
   mutate(cover = n*100/sum(n)) %>% 
   ungroup()
 
-# 3.2 Plot --
+# 3.2 Make the plot --
 
-ggplot(data = data_transect, aes(x = parentEventID, y = cover, fill = category)) +
-  geom_bar(stat = "identity", position = "stack")
+ggplot(data = data_aggregated, aes(x = year, y = cover)) +
+  geom_point(alpha = 0.25, color = "#446CB3") +
+  geom_smooth() +
+  facet_wrap(~category) +
+  labs(x = "Year", y = "Benthic cover (%)")
 
-ggsave("figs/hangover-transect-benthic-community.png")
+# 3.3 Save the plot --
 
-# 4. Plot data per site ----
+ggsave("figs/st-eustatius-benthic-trends.png")
 
-# 4.1 Calculate cover per site --
+# 4. Cover of benthic categories per year and site ----
 
-data_site <- data %>% 
-  group_by(locality, category) %>% 
+# 4.1 Aggregate the data --
+
+data_aggregated <- data %>% 
+  group_by(locality, year, category) %>% 
   summarise(n = sum(n)) %>%
   mutate(cover = n*100/sum(n)) %>% 
   ungroup()
 
-# 4.2 Plot --
+# 4.2 Make the plot --
 
-ggplot(data = data_site, aes(x = locality, y = cover, fill = category)) +
-  geom_bar(stat = "identity", position = "stack")
+ggplot(data = data_aggregated, aes(x = year, y = cover, fill = category)) +
+  geom_bar(stat = "identity", position = "stack") +
+  facet_wrap(~locality) +
+  labs(x = "Year", y = "Benthic cover (%)")
 
-ggsave("figs/hangover-site-benthic-community.png")
+# 4.3 Save the plot --
 
-# 5. Coral species per transect ----
+ggsave("figs/st-eustatius-benthic-community.png", height = 10, width = 18)
 
-# 3.1 Calculate cover per transect --
+# 5. Cover of coral species per year and site ----
 
-data_transect <- data %>% 
+# 5.1 Aggregate the data --
+
+data_aggregated <- data %>% 
   filter(category == "Coral") %>% 
-  group_by(locality, parentEventID, subcategory) %>% 
+  group_by(locality, year, subcategory) %>% 
   summarise(n = sum(n)) %>%
   mutate(cover = n*100/sum(n)) %>% 
   ungroup()
 
-# 3.2 Plot --
+# 5.2 Make the plot --
 
-ggplot(data = data_transect, aes(x = parentEventID, y = cover, fill = subcategory)) +
-  geom_bar(stat = "identity", position = "stack")
+ggplot(data = data_aggregated, aes(x = year, y = cover, fill = subcategory)) +
+  geom_bar(stat = "identity", position = "stack") +
+  facet_wrap(~locality) +
+  labs(x = "Year", y = "Benthic cover (%)") +
+  theme(legend.text = element_text(face = "italic")) +
+  guides(fill = guide_legend(ncol = 1, title = "Species"))
 
-ggsave("figs/hangover-transect-coral-community.png")
+# 5.3 Save the plot --
+
+ggsave("figs/st-eustatius-coral-community.png", height = 12, width = 18)
