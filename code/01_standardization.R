@@ -97,9 +97,15 @@ pb_code <- data_benthos %>%
   select(category, code) %>% 
   distinct()
 
+# Missing site coordinates
+
+pb_sites <- data_benthos %>%
+  select(locality, decimalLatitude, decimalLongitude) %>%
+  distinct()
+
 # Number of points per photoquadrat -> 3 PQ with 50 points instead of 25
 
 pb_count <- data_benthos %>% 
   group_by(Sitename, photoquadrat, Transect, path, sheet, year) %>% 
   count() %>% 
-  ungroup() 
+  ungroup()

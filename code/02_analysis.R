@@ -5,7 +5,12 @@ library(readxl)
 
 # 2. Load data ----
 
-data <- read.csv("data/clean_data.csv")
+data <- read.csv("data/clean_data.csv") %>% 
+  mutate(category = case_when(subcategory == "Cyanobacteria" ~ "Cyanobacteria",
+                              subcategory == "Turf" ~ "Turf algae",
+                              subcategory %in% c("Porolithon", "Peyssonnelia sp", "Amphiroa", "Halimeda") ~ "Coralline algae",
+                              category == "Macroalgae" ~ "Macroalgae",
+                              TRUE ~ category))
 
 # 3. Trends of benthic categories for all sites ----
 
@@ -23,11 +28,12 @@ ggplot(data = data_aggregated, aes(x = year, y = cover)) +
   geom_point(alpha = 0.25, color = "#446CB3") +
   geom_smooth() +
   facet_wrap(~category) +
+  lims(y = c(0, 100)) +
   labs(x = "Year", y = "Benthic cover (%)")
 
 # 3.3 Save the plot --
 
-ggsave("figs/st-eustatius-benthic-trends.png")
+ggsave("figs/st-eustatius-benthic-trends.png", width = 10, height = 8)
 
 # 4. Cover of benthic categories per year and site ----
 
