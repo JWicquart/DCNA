@@ -6,6 +6,7 @@ library(readxl)
 # 2. Load data ----
 
 data <- read.csv("data/clean_data.csv") %>% 
+  filter(category != "Tape, wand, shadow" | is.na(category)) %>% 
   mutate(category = case_when(subcategory == "Cyanobacteria" ~ "Cyanobacteria",
                               subcategory == "Turf" ~ "Turf algae",
                               subcategory %in% c("Porolithon", "Peyssonnelia sp", "Amphiroa", "Halimeda") ~ "Coralline algae",
