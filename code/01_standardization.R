@@ -13,7 +13,13 @@ site_data <- read_xlsx("data/site.xlsx", range = "B1:F25") %>%
   mutate(locality = str_replace_all(locality, c("STENAPA Reef\\*\\*" = "Stenapa Reef",
                                                 "Anchor Point South" = "Anchor Point",
                                                 "SE11" = "SE_11",
-                                                "SE8" = "SE_8")))
+                                                "SE8" = "SE_8"))) %>% 
+  select(-Zone) %>% 
+  filter(locality != "Stenapa Reef") %>% 
+  bind_rows(., tibble(locality = c("Blocks", "Mushroom Garden", "Stenapa Reef"),
+                      verbatimDepth = c(17, 16, 17),
+                      decimalLatitude = c(17.46400, 17.46265, 17.48425),
+                      decimalLongitude = c(-62.98508, -62.97762, -62.99717)))
 
 # 2.2 Code data --
 

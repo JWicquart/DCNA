@@ -6,6 +6,7 @@ library(readxl)
 # 2. Load data ----
 
 data <- read.csv("data/clean_data.csv") %>% 
+  filter(!is.na(locality)) %>% 
   filter(!(category %in% c("Tape, wand, shadow", "Unknown")) | is.na(category)) %>% 
   mutate(category = case_when(subcategory == "Cyanobacteria" ~ "Cyanobacteria",
                               subcategory == "Turf" ~ "Turf algae",
@@ -73,7 +74,7 @@ data_aggregated <- data %>%
 ggplot(data = data_aggregated, aes(x = year, y = cover, fill = subcategory)) +
   geom_bar(stat = "identity", position = "stack") +
   facet_wrap(~locality) +
-  labs(x = "Year", y = "Benthic cover (%)") +
+  labs(x = "Year", y = "Hard coral cover (%)") +
   theme(legend.text = element_text(face = "italic")) +
   guides(fill = guide_legend(ncol = 1, title = "Species"))
 
